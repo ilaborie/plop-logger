@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": ["es2015", "esnext.array", "es2017.string"],
+    "outDir": "lib",
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "importHelpers": true
+  },
+  "include": ["src/**/*"]
+}

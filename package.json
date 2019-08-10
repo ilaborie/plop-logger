@@ -1,0 +1,66 @@
+{
+  "name": "plop-logger",
+  "version": "1.0.0",
+  "description": "Basic logger",
+  "keywords": [
+    "logger",
+    "logging"
+  ],
+  "author": "Igor Laborie <ilaborie@gmail.com>",
+  "contributors": [],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/ilaborie/plop-logger#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ilaborie/plop-logger"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "clean": "npx rimraf lib/",
+    "prebuild": "npm run clean",
+    "build": "npx tsc --declaration",
+    "prelint-staged": "npm run build",
+    "test": "npx jest",
+    "test:watch": "npx jest --watch",
+    "test:coverage": "npx jest --coverage",
+    "release": "np"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js,css,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{ts,js}": [
+      "eslint --fix src/**/*.ts",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "chalk": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.17",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "eslint": "^5.0.0",
+    "eslint-config-prettier": "^6.0.0",
+    "husky": "^3.0.3",
+    "jest": "^24.8.0",
+    "lint-staged": "^9.2.1",
+    "prettier": "^1.18.2",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}
