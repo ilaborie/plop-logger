@@ -1,1 +1,7 @@
-console.log("Hello plop-logger");
+export enum LogLevel {
+  Trace,
+  Debug,
+  Info,
+  Warn,
+  Error
+}
