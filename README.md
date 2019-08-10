@@ -75,3 +75,18 @@ Configuration:
 - `formatMessage(message: string): string`: format the message, by default the message,
 - `formatArg(arg: any | null): string`: format the argument, by default use `toString()` or the empty string,
 - `formatDump(obj: any): string[]`: format an object for a dump, by default use `JSON#stringify`.
+
+## Color + Emoji Configuration
+
+The key feature of this project is the color + emoji configuration :
+
+```typescript
+import { Logger } from "plop-logger";
+import { colorEmojiConfig } from "plop-logger/extra/colorEmojiConfig";
+
+// Use the colorEmojiConfig
+Logger.config = colorEmojiConfig;
+// ...
+```
+
+![example Color + Emoji Configuration](./examples/color-emoji.png)
