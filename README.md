@@ -73,4 +73,5 @@ Configuration:
 - `formatDate(now: Date): string`: display the log date, by default `Date#toLocaleTimeString()`,
 - `formatName(name: string): string`: display the name, by default the name,
 - `formatMessage(message: string): string`: format the message, by default the message,
-- `formatArg(arg: any | null): string`: format the argument, by default use `toString()` or the empty string.
+- `formatArg(arg: any | null): string`: format the argument, by default use `toString()` or the empty string,
+- `formatDump(obj: any): string[]`: format an object for a dump, by default use `JSON#stringify`.

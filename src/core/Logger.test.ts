@@ -274,3 +274,17 @@ describe("argument", () => {
     spy.mockRestore();
   });
 });
+
+describe("dump", () => {
+  test("", () => {
+    const spy = jest.spyOn(global.console, "log").mockImplementation();
+    const logger = Logger.getLogger("plop");
+    logger.level = LogLevel.Info;
+    const obj = [1, 2, 3, { a: 42 }];
+
+    logger.dump(obj);
+
+    expect(spy).toHaveBeenCalledWith("dump", JSON.stringify(obj, null, 2));
+    spy.mockRestore();
+  });
+});

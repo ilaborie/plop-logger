@@ -21,7 +21,8 @@ describe("format", () => {
     formatDate,
     formatName,
     formatMessage,
-    formatArg
+    formatArg,
+    formatDump
   } = defaultConfig;
 
   test("formatLevel", () => {
@@ -68,5 +69,18 @@ describe("format", () => {
     const result = formatArg(null);
 
     expect(result).toBe("");
+  });
+
+  test("formatDump", () => {
+    const result = formatDump([1, 2, { a: "plop" }]);
+    const expected = `[
+  1,
+  2,
+  {
+    "a": "plop"
+  }
+]`;
+
+    expect(result).toStrictEqual(["dump", expected]);
   });
 });

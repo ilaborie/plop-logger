@@ -14,6 +14,7 @@ export interface LoggerConfiguration {
   formatName(name: string): string;
   formatMessage(message: string): string;
   formatArg(arg: any | null): string;
+  formatDump(obj: any): string[];
 }
 
 /**
@@ -42,5 +43,8 @@ export const defaultConfig: LoggerConfiguration = {
   },
   formatArg(arg: any | null): string {
     return arg || "";
+  },
+  formatDump(obj: any): string[] {
+    return ["dump", JSON.stringify(obj, null, 2)];
   }
 };

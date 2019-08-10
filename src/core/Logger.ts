@@ -54,6 +54,14 @@ export class Logger {
   }
 
   /**
+   * Dump an object
+   */
+  dump(obj: any): void {
+    const formatted = Logger.config.formatDump(obj);
+    this.appender.log(...formatted);
+  }
+
+  /**
    * Log a trace message
    * @param message the message
    * @param arg eventually an argument
