@@ -1,7 +1,2 @@
-export enum LogLevel {
-  Trace,
-  Debug,
-  Info,
-  Warn,
-  Error
-}
+export * from "./core/LoggerLevel";
+export * from "./core/Logger";
