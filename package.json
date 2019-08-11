@@ -24,6 +24,7 @@
     "clean": "npx rimraf lib/",
     "prebuild": "npm run clean",
     "build": "npx tsc --declaration",
+    "postbuild": "npx rimraf lib/**/*.test.*",
     "prelint-staged": "npm run build",
     "test": "npx jest",
     "test:watch": "npx jest --watch",
@@ -47,7 +48,7 @@
     ]
   },
   "dependencies": {
-    "chalk": "^2.4.2"
+    "ansi-colors": "^4.1.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.17",

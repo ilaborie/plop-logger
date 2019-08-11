@@ -2,20 +2,20 @@ import colors from "ansi-colors";
 import { LoggerConfiguration, defaultConfig } from "../core/LoggerConfig";
 import { LogLevel } from "../core/LoggerLevel";
 
-export const colorEmojiConfig: LoggerConfiguration = {
+export const colorConfig: LoggerConfiguration = {
   ...defaultConfig,
   formatLevel(level: LogLevel): string {
     switch (level) {
       case LogLevel.Trace:
-        return "🐾";
+        return colors.whiteBright("TRACE");
       case LogLevel.Debug:
-        return "🐛";
+        return colors.greenBright("DEBUG");
       case LogLevel.Info:
-        return "ℹ️ ";
+        return colors.cyan("INFO ");
       case LogLevel.Warn:
-        return "⚠️ ";
+        return colors.yellow("WARN ");
       case LogLevel.Error:
-        return "💥";
+        return colors.bgRed.gray.bold("ERROR");
       default:
         return LogLevel[level];
     }
@@ -54,6 +54,9 @@ export const colorEmojiConfig: LoggerConfiguration = {
     return colors.cyan(value);
   },
   formatDump(obj: any): string[] {
-    return ["🗑 ", colors.yellow(JSON.stringify(obj, null, 2))];
+    return [
+      colors.symbols.pointer,
+      colors.dim.whiteBright(JSON.stringify(obj, null, 2))
+    ];
   }
 };
