@@ -48,7 +48,8 @@
     ]
   },
   "dependencies": {
-    "ansi-colors": "^4.1.1"
+    "ansi-colors": "^4.1.1",
+    "tslib": "^1.10.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.17",
