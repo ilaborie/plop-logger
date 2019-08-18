@@ -70,6 +70,15 @@ describe("format", () => {
     expect(result).toContain("arg");
   });
 
+  test("formatArg with an evil object", () => {
+    const arg: any = {};
+    arg["self"] = arg;
+
+    const result = formatArg(arg);
+
+    expect(result).toContain("object");
+  });
+
   test("formatArg with null", () => {
     const result = formatArg(null);
 
@@ -80,5 +89,13 @@ describe("format", () => {
     const result = formatDump([1, 2, { a: "plop" }]);
 
     expect(result.join("")).toContain("plop");
+  });
+
+  test("formatDump evil", () => {
+    const value: any = {};
+    value["self"] = value;
+    const result = formatDump(value);
+
+    expect(result.join("")).toContain("object");
   });
 });

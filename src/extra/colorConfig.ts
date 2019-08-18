@@ -47,16 +47,23 @@ export const colorConfig: LoggerConfiguration = {
     if (typeof arg === "function") {
       value = arg.apply(null);
     } else if (typeof arg === "object") {
-      value = JSON.stringify(arg);
+      try {
+        value = JSON.stringify(arg);
+      } catch (e) {
+        value = arg.toString();
+      }
     } else {
       value = `${arg}`;
     }
     return colors.cyan(value);
   },
   formatDump(obj: any): string[] {
-    return [
-      colors.symbols.pointer,
-      colors.dim.whiteBright(JSON.stringify(obj, null, 2))
-    ];
+    let value: string;
+    try {
+      value = JSON.stringify(obj, null, 2);
+    } catch (e) {
+      value = obj.toString();
+    }
+    return [colors.symbols.pointer, colors.dim.whiteBright(value)];
   }
 };
