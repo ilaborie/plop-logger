@@ -1,6 +1,6 @@
-import { LogLevel, LoggerLevels } from "./LoggerLevel";
+import { LoggerLevels, LogLevel } from "./LoggerLevel";
 import { Logger } from "./Logger";
-import { LoggerConfiguration, defaultConfig } from "./LoggerConfig";
+import { defaultConfig } from "./LoggerConfig";
 
 describe("getLogger", () => {
   test("should be by default at level Info", () => {
@@ -20,11 +20,10 @@ describe("getLogger", () => {
     const name = "a.b";
     const levels: LoggerLevels = {};
     levels[name] = "warn";
-    const config: LoggerConfiguration = {
+    Logger.config = {
       ...defaultConfig,
       levels
     };
-    Logger.config = config;
 
     const logger = Logger.getLogger(name);
 
@@ -39,11 +38,10 @@ describe("getLogger", () => {
       "a.d": "warn",
       z: "error"
     };
-    const config: LoggerConfiguration = {
+    Logger.config = {
       ...defaultConfig,
       levels
     };
-    Logger.config = config;
 
     const logger = Logger.getLogger(name);
 
@@ -52,10 +50,18 @@ describe("getLogger", () => {
 });
 
 describe("level", () => {
-  test("should display all messages with level = Trace", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
+  function testLevel(
+    level: LogLevel,
+    [log, trace, debug, info, warn, error]: boolean[]
+  ): void {
+    const spyLog = jest.spyOn(global.console, "log").mockImplementation();
+    const spyTrace = jest.spyOn(global.console, "trace").mockImplementation();
+    const spyDebug = jest.spyOn(global.console, "debug").mockImplementation();
+    const spyInfo = jest.spyOn(global.console, "info").mockImplementation();
+    const spyWarn = jest.spyOn(global.console, "warn").mockImplementation();
+    const spyError = jest.spyOn(global.console, "error").mockImplementation();
     const logger = Logger.getLogger("plop");
-    logger.level = LogLevel.Trace;
+    logger.level = level;
 
     logger.trace("trace");
     logger.debug("debug");
@@ -63,74 +69,42 @@ describe("level", () => {
     logger.warn("warn");
     logger.error("error");
 
-    expect(spy).toHaveBeenCalledTimes(5);
-    spy.mockRestore();
+    expect(spyLog).toHaveBeenCalledTimes(log ? 1 : 0);
+    expect(spyTrace).toHaveBeenCalledTimes(trace ? 1 : 0);
+    expect(spyDebug).toHaveBeenCalledTimes(debug ? 1 : 0);
+    expect(spyInfo).toHaveBeenCalledTimes(info ? 1 : 0);
+    expect(spyWarn).toHaveBeenCalledTimes(warn ? 1 : 0);
+    expect(spyError).toHaveBeenCalledTimes(error ? 1 : 0);
+
+    [spyLog, spyTrace, spyDebug, spyInfo, spyWarn, spyError].forEach(spy =>
+      spy.mockRestore()
+    );
+  }
+
+  test("should display all messages with level = Trace", () => {
+    testLevel(LogLevel.Trace, [false, true, true, true, true, true]);
   });
 
   test("should display some messages with level = Debug", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
-    const logger = Logger.getLogger("plop");
-    logger.level = LogLevel.Debug;
-
-    logger.trace("trace");
-    logger.debug("debug");
-    logger.info("info");
-    logger.warn("warn");
-    logger.error("error");
-
-    expect(spy).toHaveBeenCalledTimes(4);
-    spy.mockRestore();
+    testLevel(LogLevel.Debug, [false, false, true, true, true, true]);
   });
 
   test("should display some messages with level = Info", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
-    const logger = Logger.getLogger("plop");
-    logger.level = LogLevel.Info;
-
-    logger.trace("trace");
-    logger.debug("debug");
-    logger.info("info");
-    logger.warn("warn");
-    logger.error("error");
-
-    expect(spy).toHaveBeenCalledTimes(3);
-    spy.mockRestore();
+    testLevel(LogLevel.Info, [false, false, false, true, true, true]);
   });
 
   test("should display some messages with level = Warn", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
-    const logger = Logger.getLogger("plop");
-    logger.level = LogLevel.Warn;
-
-    logger.trace("trace");
-    logger.debug("debug");
-    logger.info("info");
-    logger.warn("warn");
-    logger.error("error");
-
-    expect(spy).toHaveBeenCalledTimes(2);
-    spy.mockRestore();
+    testLevel(LogLevel.Warn, [false, false, false, false, true, true]);
   });
 
   test("should display some messages with level = Error", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
-    const logger = Logger.getLogger("plop");
-    logger.level = LogLevel.Error;
-
-    logger.trace("trace");
-    logger.debug("debug");
-    logger.info("info");
-    logger.warn("warn");
-    logger.error("error");
-
-    expect(spy).toHaveBeenCalledTimes(1);
-    spy.mockRestore();
+    testLevel(LogLevel.Error, [false, false, false, false, false, true]);
   });
 });
 
 describe("log", () => {
   test("should display trace message", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
+    const spy = jest.spyOn(global.console, "trace").mockImplementation();
     const logger = Logger.getLogger("plop");
     logger.level = LogLevel.Trace;
 
@@ -148,7 +122,7 @@ describe("log", () => {
   });
 
   test("should display debug message", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
+    const spy = jest.spyOn(global.console, "debug").mockImplementation();
     const logger = Logger.getLogger("plop");
     logger.level = LogLevel.Debug;
 
@@ -166,7 +140,7 @@ describe("log", () => {
   });
 
   test("should display info message", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
+    const spy = jest.spyOn(global.console, "info").mockImplementation();
     const logger = Logger.getLogger("plop");
     logger.level = LogLevel.Info;
 
@@ -184,7 +158,7 @@ describe("log", () => {
   });
 
   test("should display warn message", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
+    const spy = jest.spyOn(global.console, "warn").mockImplementation();
     const logger = Logger.getLogger("plop");
     logger.level = LogLevel.Warn;
 
@@ -202,7 +176,7 @@ describe("log", () => {
   });
 
   test("should display error message", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
+    const spy = jest.spyOn(global.console, "error").mockImplementation();
     const logger = Logger.getLogger("plop");
     logger.level = LogLevel.Error;
 
@@ -222,7 +196,7 @@ describe("log", () => {
 
 describe("message", () => {
   test("should eval message builder function when logging", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
+    const spy = jest.spyOn(global.console, "info").mockImplementation();
     const logger = Logger.getLogger("plop");
     logger.level = LogLevel.Info;
     const messageBuilder = jest.fn(() => "message");
@@ -242,7 +216,7 @@ describe("message", () => {
   });
 
   test("should not eval message builder function when not logging", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
+    const spy = jest.spyOn(global.console, "info").mockImplementation();
     const logger = Logger.getLogger("plop");
     logger.level = LogLevel.Info;
     const messageBuilder = jest.fn(() => "message");
@@ -257,7 +231,7 @@ describe("message", () => {
 
 describe("argument", () => {
   test("should display argument", () => {
-    const spy = jest.spyOn(global.console, "log").mockImplementation();
+    const spy = jest.spyOn(global.console, "info").mockImplementation();
     const logger = Logger.getLogger("plop");
     logger.level = LogLevel.Info;
 

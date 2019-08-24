@@ -1,4 +1,4 @@
-import { LogLevel, logLevel } from "./LoggerLevel";
+import { LogLevel, logLevel, levelToLogFunction } from "./LoggerLevel";
 
 describe("LogLevel", () => {
   test("All < others", () => {
@@ -82,5 +82,42 @@ describe("logLevel", () => {
     const result = logLevel(name);
 
     expect(result).toBe(null);
+  });
+});
+
+describe("levelToLogFunction", () => {
+  test("should return console.log function for All", () => {
+    const result = levelToLogFunction(LogLevel.All, console);
+    expect(result).toBe(console.log);
+  });
+
+  test("should return console.trace function for Trace", () => {
+    const result = levelToLogFunction(LogLevel.Trace, console);
+    expect(result).toBe(console.trace);
+  });
+
+  test("should return console.debug function for Debug", () => {
+    const result = levelToLogFunction(LogLevel.Debug, console);
+    expect(result).toBe(console.debug);
+  });
+
+  test("should return console.info function for Info", () => {
+    const result = levelToLogFunction(LogLevel.Info, console);
+    expect(result).toBe(console.info);
+  });
+
+  test("should return console.warn function for Warn", () => {
+    const result = levelToLogFunction(LogLevel.Warn, console);
+    expect(result).toBe(console.warn);
+  });
+
+  test("should return console.error function for Error", () => {
+    const result = levelToLogFunction(LogLevel.Error, console);
+    expect(result).toBe(console.error);
+  });
+
+  test("should return console.log function for None", () => {
+    const result = levelToLogFunction(LogLevel.None, console);
+    expect(result).toBe(console.log);
   });
 });

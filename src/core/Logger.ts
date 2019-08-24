@@ -1,4 +1,4 @@
-import { LogLevel, logLevel } from "./LoggerLevel";
+import { LogLevel, logLevel, levelToLogFunction } from "./LoggerLevel";
 import { defaultConfig, LoggerConfiguration } from "./LoggerConfig";
 
 export type MessageBuilder = () => string;
@@ -124,7 +124,8 @@ export class Logger {
         formatMessage(msg),
         formatArg(arg || null)
       ];
-      this.appender.log(...formatted);
+      const logFunction = levelToLogFunction(level, this.appender);
+      logFunction(...formatted);
     }
   }
 }
