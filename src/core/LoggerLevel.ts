@@ -1,9 +1,11 @@
 export enum LogLevel {
+  All,
   Trace,
   Debug,
   Info,
   Warn,
-  Error
+  Error,
+  None
 }
 
 export interface LoggerLevels {
@@ -12,6 +14,8 @@ export interface LoggerLevels {
 
 export function logLevel(s: string): LogLevel | null {
   switch ((s || "").toLowerCase()) {
+    case "all":
+      return LogLevel.All;
     case "trace":
       return LogLevel.Trace;
     case "debug":
@@ -22,6 +26,8 @@ export function logLevel(s: string): LogLevel | null {
       return LogLevel.Warn;
     case "error":
       return LogLevel.Error;
+    case "none":
+      return LogLevel.None;
     default:
       return null;
   }
