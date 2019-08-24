@@ -82,7 +82,7 @@ describe("format", () => {
   test("formatArg with null", () => {
     const result = formatArg(null);
 
-    expect(result).toBe("");
+    expect(result).toBe("<null>");
   });
 
   test("formatDump", () => {

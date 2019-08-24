@@ -115,8 +115,7 @@ describe("log", () => {
       expect.any(String),
       "plop",
       "-",
-      "message",
-      ""
+      "message"
     );
     spy.mockRestore();
   });
@@ -133,8 +132,7 @@ describe("log", () => {
       expect.any(String),
       "plop",
       "-",
-      "message",
-      ""
+      "message"
     );
     spy.mockRestore();
   });
@@ -151,8 +149,7 @@ describe("log", () => {
       expect.any(String),
       "plop",
       "-",
-      "message",
-      ""
+      "message"
     );
     spy.mockRestore();
   });
@@ -169,8 +166,7 @@ describe("log", () => {
       expect.any(String),
       "plop",
       "-",
-      "message",
-      ""
+      "message"
     );
     spy.mockRestore();
   });
@@ -187,8 +183,7 @@ describe("log", () => {
       expect.any(String),
       "plop",
       "-",
-      "message",
-      ""
+      "message"
     );
     spy.mockRestore();
   });
@@ -209,8 +204,7 @@ describe("message", () => {
       expect.any(String),
       "plop",
       "-",
-      "message",
-      ""
+      "message"
     );
     spy.mockRestore();
   });
@@ -244,6 +238,78 @@ describe("argument", () => {
       "-",
       "message",
       "arg"
+    );
+    spy.mockRestore();
+  });
+
+  test("should display 0", () => {
+    const spy = jest.spyOn(global.console, "info").mockImplementation();
+    const logger = Logger.getLogger("plop");
+    logger.level = LogLevel.Info;
+
+    logger.info("message", 0);
+
+    expect(spy).toHaveBeenCalledWith(
+      "Info",
+      expect.any(String),
+      "plop",
+      "-",
+      "message",
+      "0"
+    );
+    spy.mockRestore();
+  });
+
+  test("should display false", () => {
+    const spy = jest.spyOn(global.console, "info").mockImplementation();
+    const logger = Logger.getLogger("plop");
+    logger.level = LogLevel.Info;
+
+    logger.info("message", false);
+
+    expect(spy).toHaveBeenCalledWith(
+      "Info",
+      expect.any(String),
+      "plop",
+      "-",
+      "message",
+      "false"
+    );
+    spy.mockRestore();
+  });
+
+  test("should display null", () => {
+    const spy = jest.spyOn(global.console, "info").mockImplementation();
+    const logger = Logger.getLogger("plop");
+    logger.level = LogLevel.Info;
+
+    logger.info("message", null);
+
+    expect(spy).toHaveBeenCalledWith(
+      "Info",
+      expect.any(String),
+      "plop",
+      "-",
+      "message",
+      "null"
+    );
+    spy.mockRestore();
+  });
+
+  test("should display ''", () => {
+    const spy = jest.spyOn(global.console, "info").mockImplementation();
+    const logger = Logger.getLogger("plop");
+    logger.level = LogLevel.Info;
+
+    logger.info("message", "");
+
+    expect(spy).toHaveBeenCalledWith(
+      "Info",
+      expect.any(String),
+      "plop",
+      "-",
+      "message",
+      ""
     );
     spy.mockRestore();
   });

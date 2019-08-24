@@ -42,7 +42,7 @@ export const colorEmojiConfig: LoggerConfiguration = {
     return colors.magenta(name);
   },
   formatArg(arg: any | null): string {
-    if (arg === null) return "";
+    if (arg === null) return "<null>";
     let value: string;
     if (typeof arg === "function") {
       value = arg.apply(null);

@@ -42,7 +42,7 @@ export const defaultConfig: LoggerConfiguration = {
     return message;
   },
   formatArg(arg: any | null): string {
-    return arg || "";
+    return "" + arg;
   },
   formatDump(obj: any): string[] {
     return ["dump", JSON.stringify(obj, null, 2)];
