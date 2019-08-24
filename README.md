@@ -49,8 +49,15 @@ You can configure the logger with the static `Logger.config` property.
 import { defaultConfig, Logger } from "./../src";
 
 // Create a custom config
+// using ISO Date
+// every logger named 'service' or 'service.*' should log warnings and errors
+// but the logger named 'service.plopper' should log everything
 const customConfig = {
   ...defaultConfig,
+  levels: {
+    service: "warn",
+    "service.plopper": "trace" // level is case-insensitive
+  },
   formatDate(date: Date) {
     return date.toISOString();
   }
@@ -78,7 +85,7 @@ Configuration:
 
 ## Color Configuration
 
-You ca use a colorful configuration:
+You can use a colorful configuration:
 
 ```typescript
 import { Logger } from "plop-logger";
