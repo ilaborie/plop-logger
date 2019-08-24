@@ -8,9 +8,9 @@ logger.level = LogLevel.Trace;
 
 logger.trace("a trace message", "Plop!");
 logger.debug("a debug message", "Plop!");
-logger.info("a debug message", "Plop!");
-logger.warn("a debug message", "Plop!");
-logger.error("a debug message", "Plop!");
+logger.info("an info message", "Plop!");
+logger.warn("a warn message", "Plop!");
+logger.error("an error message", "Plop!");
 
 const obj = { name: "Plop", value: 42 };
 logger.dump(obj);
