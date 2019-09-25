@@ -1,22 +1,20 @@
-import { colorConfig } from "./colorConfig";
+import { NodeColorAppender } from "./colorConfig";
 import { LogLevel } from "../core/LoggerLevel";
 
 describe("format", () => {
-  const {
-    formatLevel,
-    formatDate,
-    formatName,
-    formatMessage,
-    formatArg,
-    formatDump
-  } = colorConfig;
+  const appender = new NodeColorAppender(global.console);
 
   describe("formatLevel", () => {
-    test("trace", () => expect(formatLevel(LogLevel.Trace)).toContain("TRACE"));
-    test("debug", () => expect(formatLevel(LogLevel.Debug)).toContain("DEBUG"));
-    test("info", () => expect(formatLevel(LogLevel.Info)).toContain("INFO"));
-    test("warn", () => expect(formatLevel(LogLevel.Warn)).toContain("WARN"));
-    test("error", () => expect(formatLevel(LogLevel.Error)).toContain("ERROR"));
+    test("trace", () =>
+      expect(appender.formatLevel(LogLevel.Trace)).toContain("TRACE"));
+    test("debug", () =>
+      expect(appender.formatLevel(LogLevel.Debug)).toContain("DEBUG"));
+    test("info", () =>
+      expect(appender.formatLevel(LogLevel.Info)).toContain("INFO"));
+    test("warn", () =>
+      expect(appender.formatLevel(LogLevel.Warn)).toContain("WARN"));
+    test("error", () =>
+      expect(appender.formatLevel(LogLevel.Error)).toContain("ERROR"));
   });
 
   test("formatDate", () => {
@@ -25,7 +23,7 @@ describe("format", () => {
     date.setSeconds(18);
     date.setMilliseconds(7);
 
-    const result = formatDate(date);
+    const result = appender.formatDate(date);
 
     expect(result).toBe("46:18.007");
   });
@@ -33,7 +31,7 @@ describe("format", () => {
   test("formatName", () => {
     const name = "plop";
 
-    const result = formatName(name);
+    const result = appender.formatName(name);
 
     expect(result).toContain(name);
   });
@@ -41,7 +39,7 @@ describe("format", () => {
   test("formatMessage", () => {
     const message = "message";
 
-    const result = formatMessage(message);
+    const result = appender.formatMessage(message);
 
     expect(result).toContain(message);
   });
@@ -49,7 +47,7 @@ describe("format", () => {
   test("formatArg", () => {
     const arg = "arg";
 
-    const result = formatArg(arg);
+    const result = appender.formatArg(arg);
 
     expect(result).toContain(arg);
   });
@@ -57,7 +55,7 @@ describe("format", () => {
   test("formatArg with a function", () => {
     const arg = (): string => "arg";
 
-    const result = formatArg(arg);
+    const result = appender.formatArg(arg);
 
     expect(result).toContain("arg");
   });
@@ -65,7 +63,7 @@ describe("format", () => {
   test("formatArg with an object", () => {
     const arg = { name: "arg" };
 
-    const result = formatArg(arg);
+    const result = appender.formatArg(arg);
 
     expect(result).toContain("arg");
   });
@@ -74,19 +72,19 @@ describe("format", () => {
     const arg: any = {};
     arg["self"] = arg;
 
-    const result = formatArg(arg);
+    const result = appender.formatArg(arg);
 
     expect(result).toContain("object");
   });
 
   test("formatArg with null", () => {
-    const result = formatArg(null);
+    const result = appender.formatArg(null);
 
     expect(result).toBe("<null>");
   });
 
   test("formatDump", () => {
-    const result = formatDump([1, 2, { a: "plop" }]);
+    const result = appender.formatDump([1, 2, { a: "plop" }]);
 
     expect(result.join("")).toContain("plop");
   });
@@ -94,7 +92,7 @@ describe("format", () => {
   test("formatDump evil", () => {
     const value: any = {};
     value["self"] = value;
-    const result = formatDump(value);
+    const result = appender.formatDump(value);
 
     expect(result.join("")).toContain("object");
   });

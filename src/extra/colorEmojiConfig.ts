@@ -1,9 +1,16 @@
 import colors from "ansi-colors";
-import { LoggerConfiguration, defaultConfig } from "../core/LoggerConfig";
+import {
+  ConsoleAppender,
+  defaultConfig,
+  LoggerConfiguration
+} from "../core/LoggerConfig";
 import { LogLevel } from "../core/LoggerLevel";
 
-export const colorEmojiConfig: LoggerConfiguration = {
-  ...defaultConfig,
+export class NodeEmojiAppender extends ConsoleAppender {
+  constructor(console: Console) {
+    super(console);
+  }
+
   formatLevel(level: LogLevel): string {
     switch (level) {
       case LogLevel.Trace:
@@ -19,7 +26,8 @@ export const colorEmojiConfig: LoggerConfiguration = {
       default:
         return LogLevel[level];
     }
-  },
+  }
+
   formatDate(now: Date): string {
     return [
       now
@@ -37,10 +45,12 @@ export const colorEmojiConfig: LoggerConfiguration = {
         .toString()
         .padStart(3, "0")
     ].join("");
-  },
+  }
+
   formatName(name: string): string {
     return colors.magenta(name);
-  },
+  }
+
   formatArg(arg: any | null): string {
     if (arg === null) return "<null>";
     let value: string;
@@ -56,7 +66,8 @@ export const colorEmojiConfig: LoggerConfiguration = {
       value = `${arg}`;
     }
     return colors.cyan(value);
-  },
+  }
+
   formatDump(obj: any): string[] {
     let value: string;
     try {
@@ -66,4 +77,9 @@ export const colorEmojiConfig: LoggerConfiguration = {
     }
     return ["🗑 ", colors.yellow(value)];
   }
+}
+
+export const colorEmojiConfig: LoggerConfiguration = {
+  ...defaultConfig,
+  appender: new NodeEmojiAppender(global.console)
 };

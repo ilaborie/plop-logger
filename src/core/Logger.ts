@@ -1,5 +1,5 @@
-import { levelToLogFunction, logLevel, LogLevel } from "./LoggerLevel";
-import { defaultConfig, LoggerConfiguration } from "./LoggerConfig";
+import { logLevel, LogLevel } from "./LoggerLevel";
+import { defaultConfig, LogEntry, LoggerConfiguration } from "./LoggerConfig";
 
 export type MessageBuilder = () => string;
 
@@ -34,9 +34,8 @@ export class Logger {
     if (result) {
       return result;
     }
-    const { defaultLevel, appender } = Logger.config;
-    const level = Logger.findLevel(name, defaultLevel);
-    const newLogger = new Logger(name, level, appender);
+    const level = Logger.findLevel(name, Logger.config.defaultLevel);
+    const newLogger = new Logger(name, level);
     Logger.loggers.set(name, newLogger);
     return newLogger;
   }
@@ -45,11 +44,7 @@ export class Logger {
   level: LogLevel;
 
   // Constructor
-  private constructor(
-    readonly name: string,
-    level: LogLevel,
-    private appender: Console
-  ) {
+  private constructor(readonly name: string, level: LogLevel) {
     this.level = level;
   }
 
@@ -57,8 +52,7 @@ export class Logger {
    * Dump an object
    */
   dump(obj: any): void {
-    const formatted = Logger.config.formatDump(obj);
-    this.appender.log(...formatted);
+    Logger.config.appender.dump(obj);
   }
 
   /**
@@ -108,26 +102,14 @@ export class Logger {
 
   private log(level: LogLevel, message: Message, arg?: any): void {
     if (this.level <= level) {
-      const msg = typeof message === "function" ? message() : `${message}`;
-      const {
-        formatLevel,
-        formatDate,
-        formatName,
-        formatMessage,
-        formatArg
-      } = Logger.config;
-      const formatted = [
-        formatLevel(level),
-        formatDate(new Date()),
-        formatName(this.name),
-        "-",
-        formatMessage(msg)
-      ];
-      if (typeof arg !== "undefined") {
-        formatted.push(formatArg(arg));
-      }
-      const logFunction = levelToLogFunction(level, this.appender);
-      logFunction(...formatted);
+      const entry: LogEntry = {
+        level,
+        now: new Date(),
+        name: this.name,
+        message: typeof message === "function" ? message() : `${message}`,
+        arg
+      };
+      Logger.config.appender.log(entry);
     }
   }
 }

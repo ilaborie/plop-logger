@@ -1,5 +1,5 @@
 import { LogLevel } from "./LoggerLevel";
-import { defaultConfig } from "./LoggerConfig";
+import { ConsoleAppender, defaultConfig } from "./LoggerConfig";
 
 // findLevel(name: string, defaultLevel: LogLevel): LogLevel;
 
@@ -16,19 +16,12 @@ describe("level", () => {
 });
 
 describe("format", () => {
-  const {
-    formatLevel,
-    formatDate,
-    formatName,
-    formatMessage,
-    formatArg,
-    formatDump
-  } = defaultConfig;
+  const appender = new ConsoleAppender(global.console);
 
   test("formatLevel", () => {
     const level = LogLevel.Warn;
 
-    const result = formatLevel(level);
+    const result = appender.formatLevel(level);
 
     expect(result).toBe("Warn");
   });
@@ -36,7 +29,7 @@ describe("format", () => {
   test("formatDate", () => {
     const date = new Date();
 
-    const result = formatDate(date);
+    const result = appender.formatDate(date);
 
     expect(result).toBe(date.toLocaleTimeString());
   });
@@ -44,7 +37,7 @@ describe("format", () => {
   test("formatName", () => {
     const name = "plop";
 
-    const result = formatName(name);
+    const result = appender.formatName(name);
 
     expect(result).toBe(name);
   });
@@ -52,7 +45,7 @@ describe("format", () => {
   test("formatMessage", () => {
     const message = "message";
 
-    const result = formatMessage(message);
+    const result = appender.formatMessage(message);
 
     expect(result).toBe(message);
   });
@@ -60,19 +53,19 @@ describe("format", () => {
   test("formatArg", () => {
     const arg = "arg";
 
-    const result = formatArg(arg);
+    const result = appender.formatArg(arg);
 
     expect(result).toBe(arg);
   });
 
   test("formatArg with null", () => {
-    const result = formatArg(null);
+    const result = appender.formatArg(null);
 
     expect(result).toBe("null");
   });
 
   test("formatDump", () => {
-    const result = formatDump([1, 2, { a: "plop" }]);
+    const result = appender.formatDump([1, 2, { a: "plop" }]);
     const expected = `[
   1,
   2,
