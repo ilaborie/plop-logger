@@ -1,14 +1,30 @@
 {
+  "include": ["src", "types", "test/extra/colorEmojiConfig.test.ts", "test/extra/colorConfig.test.ts", "test/core/loggerLevel.test.ts", "test/core/LoggerConfig.test.ts", "test/core/Logger.test.ts"],
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
-    "lib": ["es2015", "esnext.array", "es2017.string"],
-    "outDir": "lib",
-    "rootDir": "src",
-    "strict": true,
-    "esModuleInterop": true,
+    "target": "es5",
+    "module": "esnext",
+    "lib": ["dom", "esnext"],
+    "importHelpers": true,
     "declaration": true,
-    "importHelpers": true
-  },
-  "include": ["src/**/*"]
+    "sourceMap": true,
+    "rootDir": "./",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*", "node_modules/*"]
+    },
+    "jsx": "react",
+    "esModuleInterop": true
+  }
 }

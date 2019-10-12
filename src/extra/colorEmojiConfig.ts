@@ -1,28 +1,24 @@
-import colors from "ansi-colors";
+import colors from 'ansi-colors';
 import {
   ConsoleAppender,
   defaultConfig,
-  LoggerConfiguration
-} from "../core/LoggerConfig";
-import { LogLevel } from "../core/LoggerLevel";
+  LoggerConfiguration,
+} from '../core/LoggerConfig';
+import { LogLevel } from '../core/LoggerLevel';
 
 export class NodeEmojiAppender extends ConsoleAppender {
-  constructor(console: Console) {
-    super(console);
-  }
-
   formatLevel(level: LogLevel): string {
     switch (level) {
       case LogLevel.Trace:
-        return "🐾";
+        return '🐾';
       case LogLevel.Debug:
-        return "🐛";
+        return '🐛';
       case LogLevel.Info:
-        return "ℹ️ ";
+        return 'ℹ️ ';
       case LogLevel.Warn:
-        return "⚠️ ";
+        return '⚠️ ';
       case LogLevel.Error:
-        return "💥";
+        return '💥';
       default:
         return LogLevel[level];
     }
@@ -33,18 +29,18 @@ export class NodeEmojiAppender extends ConsoleAppender {
       now
         .getMinutes()
         .toString()
-        .padStart(2, "0"),
-      ":",
+        .padStart(2, '0'),
+      ':',
       now
         .getSeconds()
         .toString()
-        .padStart(2, "0"),
-      ".",
+        .padStart(2, '0'),
+      '.',
       now
         .getMilliseconds()
         .toString()
-        .padStart(3, "0")
-    ].join("");
+        .padStart(3, '0'),
+    ].join('');
   }
 
   formatName(name: string): string {
@@ -52,11 +48,11 @@ export class NodeEmojiAppender extends ConsoleAppender {
   }
 
   formatArg(arg: any | null): string {
-    if (arg === null) return "<null>";
+    if (arg === null) return '<null>';
     let value: string;
-    if (typeof arg === "function") {
+    if (typeof arg === 'function') {
       value = arg.apply(null);
-    } else if (typeof arg === "object") {
+    } else if (typeof arg === 'object') {
       try {
         value = JSON.stringify(arg);
       } catch (e) {
@@ -75,11 +71,11 @@ export class NodeEmojiAppender extends ConsoleAppender {
     } catch (e) {
       value = obj.toString();
     }
-    return ["🗑 ", colors.yellow(value)];
+    return ['🗑 ', colors.yellow(value)];
   }
 }
 
 export const colorEmojiConfig: LoggerConfiguration = {
   ...defaultConfig,
-  appender: new NodeEmojiAppender(global.console)
+  appender: new NodeEmojiAppender(global.console),
 };

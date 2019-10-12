@@ -3,3 +3,4 @@ public/
 .vscode/
 lib/
 coverage/
+.rts2_cache*/

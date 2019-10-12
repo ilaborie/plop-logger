@@ -1,4 +1,4 @@
-import { LoggerLevels, LogLevel } from "./LoggerLevel";
+import { LoggerLevels, LogLevel } from './LoggerLevel';
 
 export interface LogEntry {
   level: LogLevel;
@@ -37,24 +37,29 @@ export class ConsoleAppender implements LoggerAppender {
   }
 
   formatArg(arg: any | null): string {
-    return "" + arg;
+    return '' + arg;
   }
 
   formatDump(obj: any): string[] {
-    return ["dump", JSON.stringify(obj, null, 2)];
+    return ['dump', JSON.stringify(obj, null, 2)];
   }
 
-  log(entry: LogEntry): void {
+  private formatEntry(entry: LogEntry): string[] {
     const formatted = [
       this.formatLevel(entry.level),
       this.formatDate(entry.now),
       this.formatName(entry.name),
-      "-",
-      this.formatMessage(entry.message)
+      '-',
+      this.formatMessage(entry.message),
     ];
-    if (typeof entry.arg !== "undefined") {
+    if (typeof entry.arg !== 'undefined') {
       formatted.push(this.formatArg(entry.arg));
     }
+    return formatted;
+  }
+
+  log(entry: LogEntry): void {
+    const formatted = this.formatEntry(entry);
     const logFunction = ConsoleAppender.levelToLogFunction(
       entry.level,
       this.console
@@ -100,5 +105,5 @@ export interface LoggerConfiguration {
 export const defaultConfig: LoggerConfiguration = {
   appender: new ConsoleAppender(global.console),
   defaultLevel: LogLevel.Info,
-  levels: {}
+  levels: {},
 };

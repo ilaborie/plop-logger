@@ -1,5 +1,5 @@
-import { logLevel, LogLevel } from "./LoggerLevel";
-import { defaultConfig, LogEntry, LoggerConfiguration } from "./LoggerConfig";
+import { logLevel, LogLevel } from './LoggerLevel';
+import { defaultConfig, LogEntry, LoggerConfiguration } from './LoggerConfig';
 
 export type MessageBuilder = () => string;
 
@@ -12,13 +12,13 @@ export class Logger {
   private static loggers = new Map<string, Logger>();
 
   private static findLevel(name: string, defaultLevel: LogLevel): LogLevel {
-    const names = name.split(".");
+    const names = name.split('.');
     const aux = (idx: number, acc: LogLevel): LogLevel => {
       if (idx > names.length) {
         return acc;
       }
       const slice = names.slice(0, idx);
-      const currentName = slice.join(".");
+      const currentName = slice.join('.');
       const maybeLevel = logLevel(Logger.config.levels[currentName]);
       return aux(idx + 1, maybeLevel == null ? acc : maybeLevel);
     };
@@ -106,8 +106,8 @@ export class Logger {
         level,
         now: new Date(),
         name: this.name,
-        message: typeof message === "function" ? message() : `${message}`,
-        arg
+        message: typeof message === 'function' ? message() : `${message}`,
+        arg,
       };
       Logger.config.appender.log(entry);
     }

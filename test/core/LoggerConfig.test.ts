@@ -1,32 +1,32 @@
-import { LogLevel } from "./LoggerLevel";
-import { ConsoleAppender, defaultConfig } from "./LoggerConfig";
+import { LogLevel } from '../../src/core/LoggerLevel';
+import { ConsoleAppender, defaultConfig } from '../../src/core/LoggerConfig';
 
 // findLevel(name: string, defaultLevel: LogLevel): LogLevel;
 
-describe("level", () => {
+describe('level', () => {
   const { defaultLevel, levels } = defaultConfig;
 
-  test("defaultLevel is Info", () => {
+  test('defaultLevel is Info', () => {
     expect(defaultLevel).toBe(LogLevel.Info);
   });
 
-  test("levels be empty", () => {
+  test('levels be empty', () => {
     expect(levels).toEqual({});
   });
 });
 
-describe("format", () => {
+describe('format', () => {
   const appender = new ConsoleAppender(global.console);
 
-  test("formatLevel", () => {
+  test('formatLevel', () => {
     const level = LogLevel.Warn;
 
     const result = appender.formatLevel(level);
 
-    expect(result).toBe("Warn");
+    expect(result).toBe('Warn');
   });
 
-  test("formatDate", () => {
+  test('formatDate', () => {
     const date = new Date();
 
     const result = appender.formatDate(date);
@@ -34,38 +34,38 @@ describe("format", () => {
     expect(result).toBe(date.toLocaleTimeString());
   });
 
-  test("formatName", () => {
-    const name = "plop";
+  test('formatName', () => {
+    const name = 'plop';
 
     const result = appender.formatName(name);
 
     expect(result).toBe(name);
   });
 
-  test("formatMessage", () => {
-    const message = "message";
+  test('formatMessage', () => {
+    const message = 'message';
 
     const result = appender.formatMessage(message);
 
     expect(result).toBe(message);
   });
 
-  test("formatArg", () => {
-    const arg = "arg";
+  test('formatArg', () => {
+    const arg = 'arg';
 
     const result = appender.formatArg(arg);
 
     expect(result).toBe(arg);
   });
 
-  test("formatArg with null", () => {
+  test('formatArg with null', () => {
     const result = appender.formatArg(null);
 
-    expect(result).toBe("null");
+    expect(result).toBe('null');
   });
 
-  test("formatDump", () => {
-    const result = appender.formatDump([1, 2, { a: "plop" }]);
+  test('formatDump', () => {
+    const result = appender.formatDump([1, 2, { a: 'plop' }]);
     const expected = `[
   1,
   2,
@@ -74,6 +74,6 @@ describe("format", () => {
   }
 ]`;
 
-    expect(result).toStrictEqual(["dump", expected]);
+    expect(result).toStrictEqual(['dump', expected]);
   });
 });

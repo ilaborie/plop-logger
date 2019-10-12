@@ -1,28 +1,24 @@
-import colors from "ansi-colors";
+import colors from 'ansi-colors';
 import {
   ConsoleAppender,
   defaultConfig,
-  LoggerConfiguration
-} from "../core/LoggerConfig";
-import { LogLevel } from "../core/LoggerLevel";
+  LoggerConfiguration,
+} from '../core/LoggerConfig';
+import { LogLevel } from '../core/LoggerLevel';
 
 export class NodeColorAppender extends ConsoleAppender {
-  constructor(console: Console) {
-    super(console);
-  }
-
   formatLevel(level: LogLevel): string {
     switch (level) {
       case LogLevel.Trace:
-        return colors.whiteBright("TRACE");
+        return colors.whiteBright('TRACE');
       case LogLevel.Debug:
-        return colors.greenBright("DEBUG");
+        return colors.greenBright('DEBUG');
       case LogLevel.Info:
-        return colors.cyan("INFO ");
+        return colors.cyan('INFO ');
       case LogLevel.Warn:
-        return colors.yellow("WARN ");
+        return colors.yellow('WARN ');
       case LogLevel.Error:
-        return colors.bgRed.gray.bold("ERROR");
+        return colors.bgRed.gray.bold('ERROR');
       default:
         return LogLevel[level];
     }
@@ -33,18 +29,18 @@ export class NodeColorAppender extends ConsoleAppender {
       now
         .getMinutes()
         .toString()
-        .padStart(2, "0"),
-      ":",
+        .padStart(2, '0'),
+      ':',
       now
         .getSeconds()
         .toString()
-        .padStart(2, "0"),
-      ".",
+        .padStart(2, '0'),
+      '.',
       now
         .getMilliseconds()
         .toString()
-        .padStart(3, "0")
-    ].join("");
+        .padStart(3, '0'),
+    ].join('');
   }
 
   formatName(name: string): string {
@@ -52,11 +48,11 @@ export class NodeColorAppender extends ConsoleAppender {
   }
 
   formatArg(arg: any | null): string {
-    if (arg === null) return "<null>";
+    if (arg === null) return '<null>';
     let value: string;
-    if (typeof arg === "function") {
+    if (typeof arg === 'function') {
       value = arg.apply(null);
-    } else if (typeof arg === "object") {
+    } else if (typeof arg === 'object') {
       try {
         value = JSON.stringify(arg);
       } catch (e) {
@@ -81,5 +77,5 @@ export class NodeColorAppender extends ConsoleAppender {
 
 export const colorConfig: LoggerConfiguration = {
   ...defaultConfig,
-  appender: new NodeColorAppender(global.console)
+  appender: new NodeColorAppender(global.console),
 };
