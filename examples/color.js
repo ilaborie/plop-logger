@@ -1,5 +1,4 @@
-import { LogLevel, Logger } from "./../src";
-import { colorConfig } from "./../src/extra/colorConfig";
+const { LogLevel, Logger, colorConfig } = require("plop-logger");
 
 Logger.config = colorConfig;
 

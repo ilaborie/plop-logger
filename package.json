@@ -25,7 +25,9 @@
     "prebuild": "npm run clean",
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test",
+    "test": "CI=true tsdx test",
+    "test:watch": "tsdx test",
+    "test:coverage": "CI=true tsdx test --coverage",
     "lint": "tsdx lint",
     "prerelease": "npm run build",
     "release": "np"
@@ -45,14 +47,14 @@
     "ansi-colors": "^4.1.1"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.18",
-    "@typescript-eslint/eslint-plugin": "^2.3.3",
-    "gitmoji-cli": "^2.0.0",
-    "husky": "^3.0.8",
-    "np": "^5.1.1",
+    "@types/jest": "^24.0.25",
+    "@typescript-eslint/eslint-plugin": "^2.14.0",
+    "gitmoji-cli": "^2.2.0",
+    "husky": "^3.1.0",
+    "np": "^5.2.1",
     "rimraf": "^3.0.0",
-    "tsdx": "^0.9.3",
+    "tsdx": "^0.12.1",
     "tslib": "^1.10.0",
-    "typescript": "^3.5.0"
+    "typescript": "^3.7.4"
   }
 }

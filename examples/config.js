@@ -1,4 +1,5 @@
-import { defaultConfig, Logger } from "./../src";
+const { defaultConfig, Logger } = require("plop-logger");
+
 
 // Create a custom config
 // using ISO Date
@@ -10,7 +11,7 @@ const customConfig = {
     service: "warn",
     "service.plopper": "trace" // level is case-insensitive
   },
-  formatDate(date: Date) {
+  formatDate(date) {
     return date.toISOString();
   }
 };

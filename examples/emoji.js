@@ -1,5 +1,4 @@
-import { LogLevel, Logger } from "./../src";
-import { colorEmojiConfig } from "./../src/extra/colorEmojiConfig";
+const { LogLevel, Logger, colorEmojiConfig } = require("plop-logger");
 
 Logger.config = colorEmojiConfig;
 

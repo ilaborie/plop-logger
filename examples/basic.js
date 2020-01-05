@@ -1,4 +1,4 @@
-import { LogLevel, Logger } from "./../src";
+const { LogLevel, Logger } = require("plop-logger");
 
 // Get a logger with the `plop` name
 const logger = Logger.getLogger("plop");
