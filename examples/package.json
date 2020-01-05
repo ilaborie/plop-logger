@@ -2,6 +2,6 @@
     "name": "plop-logger-example",
     "version": "3.1.0",
     "dependencies": {
-        "plop-logger": "^3.1.0"
+        "plop-logger": "^3.1.1"
     }
 }

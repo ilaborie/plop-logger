@@ -34,10 +34,7 @@ export class Logger {
     if (result) {
       return result;
     }
-    const level = Logger.findLevel(
-      name,
-      Logger?.config?.defaultLevel || defaultConfig.defaultLevel
-    );
+    const level = Logger.findLevel(name, Logger.config.defaultLevel);
     const newLogger = new Logger(name, level);
     Logger.loggers.set(name, newLogger);
     return newLogger;
