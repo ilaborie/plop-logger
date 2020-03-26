@@ -47,14 +47,14 @@
     "ansi-colors": "^4.1.1"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.25",
-    "@typescript-eslint/eslint-plugin": "^2.14.0",
+    "@types/jest": "^24.9.1",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
     "gitmoji-cli": "^2.2.0",
     "husky": "^3.1.0",
     "np": "^5.2.1",
-    "rimraf": "^3.0.0",
-    "tsdx": "^0.12.1",
-    "tslib": "^1.10.0",
-    "typescript": "^3.7.4"
+    "rimraf": "^3.0.2",
+    "tsdx": "^0.12.3",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
   }
 }
