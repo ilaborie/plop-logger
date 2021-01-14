@@ -46,7 +46,7 @@ logger.info("message to print", "Plop!"); // 'Plop!' is an argument
 You can configure the logger with the static `Logger.config` property.
 
 ```typescript
-import { defaultConfig, Logger } from "./../src";
+import { defaultConfig, Logger } from "plop-logger";
 
 // Create a custom config
 // using ISO Date
